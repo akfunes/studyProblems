@@ -46,6 +46,37 @@ class NestedIterator:
         else:
             return False
                 
+class NestedIteratorWithGenerator:
+    def __init__(self, nestedList: [NestedInteger]):
+        self.generator = self.nextNumGenerator(nestedList)
+        self.nextNum = None
+        
+    def nextNumGenerator(self,nestedList):
+        for nested in nestedList:
+            if nested.isInteger():
+                yield nested.getInteger()
+            else:
+                yield from self.nextNumGenerator(nested.getList())
+        
+    def next(self) -> int:
+        if not self.hasNext():
+            return None
+        nextVal = self.nextNum
+        self.nextNum = None
+        return nextVal
+        
+    
+    def hasNext(self) -> bool:
+        if self.nextNum is not None:
+            return True
+        try:
+            self.nextNum = next(self.generator)
+            return True
+        except:
+            # generator throws exception when finished iterating
+            # in this case it means that there are no additional 
+            # elements in the nestedList
+            return False
                 
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
