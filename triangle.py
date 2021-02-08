@@ -1,11 +1,11 @@
 # https://leetcode.com/problems/triangle/
 class Solution:
     def minimumTotal(self, triangle: List[List[int]]) -> int:
-        currIndex = 0
         if len(triangle) == 1:
             return triangle[0][0]
         
-        for i in range(1,len(triangle)):
+        maxRow = len(triangle)
+        for i in range(1,maxRow):
             for j in range(len(triangle[i])):
                 if j == 0:
                     triangle[i][j] += triangle[i-1][j]
@@ -14,5 +14,4 @@ class Solution:
                 else:
                     triangle[i][j] += min(triangle[i-1][j-1],triangle[i-1][j])
         
-        maxRow = len(triangle)
         return min(triangle[maxRow-1])
