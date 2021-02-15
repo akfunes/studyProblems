@@ -42,3 +42,22 @@ class Solution:
         
         self.recurse(0,1,nums)
         return self.permutations
+
+class Solution2:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) == 1:
+            return [nums]
+        
+        def backtrack(first):
+            if first == n:
+                ans.append(nums[:])
+            for i in range(first, n):
+                nums[first], nums[i] = nums[i], nums[first]
+                backtrack(first+1)
+                nums[first], nums[i] = nums[i], nums[first]
+                
+        ans = []
+        n = len(nums)
+        backtrack(0)
+        return ans
+        
